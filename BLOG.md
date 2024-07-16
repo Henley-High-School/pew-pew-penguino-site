@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: "Pew Pew Penguino Blog"
 permalink: /blog
 ---
