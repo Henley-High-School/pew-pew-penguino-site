@@ -6,6 +6,7 @@ permalink: /blog-2024
 # Blogs for 2024 are stored on this page.
 You can find a blog post by looking for the blog post name via the buttons.
 Enjoy!
+
 <a href="https://henley-high-school.github.io/pew-pew-penguino-site/">
   <button>Back home!</button>
 </a>
