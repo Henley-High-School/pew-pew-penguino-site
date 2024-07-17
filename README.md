@@ -41,16 +41,16 @@
             <input type="radio" name="radio-btn" id="img-4">
 
             <div class="slide first">
-                <img src="image1.jpg" alt="Image 1">
+                <img src="image1.jpg" alt="Offical HHS Coding Club Logo">
             </div>
             <div class="slide">
-                <img src="image2.jpg" alt="Image 2">
+                <img src="image2.jpg" alt="Enemy Concept Art">
             </div>
             <div class="slide">
-                <img src="image3.jpg" alt="Image 3">
+                <img src="image3.jpg" alt="Jellyfish Concept Art">
             </div>
             <div class="slide">
-                <img src="image4.jpg" alt="Image 4">
+                <img src="image4.jpg" alt="Bowerbird Concept Art">
             </div>
 
             <div class="navigation-auto">
