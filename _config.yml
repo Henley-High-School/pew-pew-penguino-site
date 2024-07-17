@@ -46,3 +46,9 @@ round-avatar: true
 # then specify the following parameter
 #title-img: /path/to/image
 
+###################
+# --- Sitemap --- #
+###################
+              - name: generate-sitemap
+                uses: cicirello/generate-sitemap@v1.10.1
+            
