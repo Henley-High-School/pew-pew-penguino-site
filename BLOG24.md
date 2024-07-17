@@ -36,7 +36,7 @@ Enjoy!
 
 
 ## All Blogs for this year are below. 😀
-<a href="https://penguinogame.me/Blog/2024/07/16/WELCOME-TO-THE-BLOG.html">
+<a href="https://penguinogame.me/2024/07/16/WELCOME-TO-THE-BLOG.html">
   <button class="cayman-button">Welcome to the Blog! 16/07/24</button>
 </a>
 
