@@ -4,7 +4,7 @@
 
 ## Have a look to see what we've done via our blogs or browse around the place!
 
-<a href="https://penguinogame.me/Blog">
+<a href="https://penguinogame.me/blog">
   <button class="cayman-button">Blogs</button>
 </a>
 

@@ -30,7 +30,7 @@ permalink: /blog
   }
 </style>
 
-<a href="https://penguinogame.me/Blog-2024">
+<a href="https://penguinogame.me/blog-2024">
   <button class="cayman-button">Blogs for 2024</button>
 </a>
 
