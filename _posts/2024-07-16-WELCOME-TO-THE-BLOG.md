@@ -8,3 +8,7 @@ If you spot any issues please report this to Ben (Email (Only HHS students/teach
 Thanks,
 Benjamin Graetz
 Executive Manager of Coding Club
+
+<a href="https://henley-high-school.github.io/pew-pew-penguino-site/Blogs">
+  <button class="cayman-button">Back to Blogs</button>
+</a>
