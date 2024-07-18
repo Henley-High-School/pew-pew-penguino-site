@@ -30,7 +30,7 @@
     box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.5); /* Blue outline on focus */
   }
 </style>
-#
+<br/><br/>
 <a href="https://penguinogame.me/blog">
   <button class="cayman-button">Blogs</button>
 </a>
