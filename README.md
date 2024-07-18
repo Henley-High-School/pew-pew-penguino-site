@@ -32,6 +32,12 @@
 </style>
 
 ## Here's some pictures of whats been made so far!
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pew Pew Penguino Site</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
     <div class="carousel">
         <div class="slides">
@@ -41,16 +47,16 @@
             <input type="radio" name="radio-btn" id="img-4">
 
             <div class="slide first">
-                <img src="image1.jpg" alt="Offical HHS Coding Club Logo">
+                <img src="image1.jpg" alt="Image 1">
             </div>
             <div class="slide">
-                <img src="image2.jpg" alt="Enemy Concept Art">
+                <img src="image2.jpg" alt="Image 2">
             </div>
             <div class="slide">
-                <img src="image3.jpg" alt="Jellyfish Concept Art">
+                <img src="image3.jpg" alt="Image 3">
             </div>
             <div class="slide">
-                <img src="image4.jpg" alt="Bowerbird Concept Art">
+                <img src="image4.jpg" alt="Image 4">
             </div>
 
             <div class="navigation-auto">
@@ -69,3 +75,4 @@
         </div>
     </div>
 </body>
+</html>

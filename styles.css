@@ -17,17 +17,18 @@ body {
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    position: relative;
 }
 
 .slides {
     display: flex;
-    width: 500%;
+    width: 400%;
     height: 100%;
     transition: all 0.5s;
 }
 
 .slide {
-    width: 20%;
+    width: 25%;
     transition: transform 0.5s ease-in-out;
 }
 
@@ -42,7 +43,7 @@ body {
     display: flex;
     width: 100%;
     justify-content: center;
-    margin-top: -40px;
+    bottom: 10px;
 }
 
 .navigation-auto div {
@@ -55,7 +56,7 @@ body {
 .navigation-manual {
     position: absolute;
     width: 100%;
-    margin-top: -40px;
+    bottom: 10px;
     display: flex;
     justify-content: center;
 }
@@ -73,29 +74,20 @@ body {
 }
 
 #img-2:checked ~ .slides {
-    transform: translateX(-20%);
+    transform: translateX(-25%);
 }
 
 #img-3:checked ~ .slides {
-    transform: translateX(-40%);
+    transform: translateX(-50%);
 }
 
 #img-4:checked ~ .slides {
-    transform: translateX(-60%);
+    transform: translateX(-75%);
 }
 
-#img-1:checked ~ .navigation-auto .auto-btn1 {
-    background: #fff;
-}
-
-#img-2:checked ~ .navigation-auto .auto-btn2 {
-    background: #fff;
-}
-
-#img-3:checked ~ .navigation-auto .auto-btn3 {
-    background: #fff;
-}
-
+#img-1:checked ~ .navigation-auto .auto-btn1,
+#img-2:checked ~ .navigation-auto .auto-btn2,
+#img-3:checked ~ .navigation-auto .auto-btn3,
 #img-4:checked ~ .navigation-auto .auto-btn4 {
     background: #fff;
 }
