@@ -32,47 +32,26 @@
 </style>
 
 ## Here's some pictures of whats been made so far!
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pew Pew Penguino Site</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
 <body>
-    <div class="carousel">
-        <div class="slides">
-            <input type="radio" name="radio-btn" id="img-1" checked>
-            <input type="radio" name="radio-btn" id="img-2">
-            <input type="radio" name="radio-btn" id="img-3">
-            <input type="radio" name="radio-btn" id="img-4">
-
-            <div class="slide first">
-                <img src="image1.jpg" alt="Image 1">
-            </div>
-            <div class="slide">
-                <img src="image2.jpg" alt="Image 2">
-            </div>
-            <div class="slide">
-                <img src="image3.jpg" alt="Image 3">
-            </div>
-            <div class="slide">
-                <img src="image4.jpg" alt="Image 4">
-            </div>
-
-            <div class="navigation-auto">
-                <div class="auto-btn1"></div>
-                <div class="auto-btn2"></div>
-                <div class="auto-btn3"></div>
-                <div class="auto-btn4"></div>
-            </div>
-        </div>
-
-        <div class="navigation-manual">
-            <label for="img-1" class="manual-btn"></label>
-            <label for="img-2" class="manual-btn"></label>
-            <label for="img-3" class="manual-btn"></label>
-            <label for="img-4" class="manual-btn"></label>
-        </div>
+    <div align="center">
+        <img src="image1.jpg" alt="Image" width="500" height="500">
     </div>
 </body>
-</html>
+
+<body>
+    <div align="center">
+        <img src="image2.jpg" alt="Image" width="500" height="500">
+    </div>
+</body>
+
+<body>
+    <div align="center">
+        <img src="image3.jpg" alt="Image" width="500" height="500">
+    </div>
+</body>
+
+<body>
+    <div align="center">
+        <img src="image4.jpg" alt="Image" width="500" height="500">
+    </div>
+</body>
