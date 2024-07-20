@@ -1,11 +1,12 @@
+<!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/henley-high-school/pew-pew-penguino" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star henley-high-school/pew-pew-penguino on GitHub">Star</a> <!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/henley-high-school" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @henley-high-school on GitHub">Follow @henley-high-school</a>
+
 # Pew Pew Penguino Offical Home
 
 # You found the offical website for Pew Pew Penguino!
 
 ## Have a look to see what we've done via our blogs or browse around the place!
-
-<!-- Place this tag where you want the button to render. -->
-<a class="github-button" href="https://github.com/henley-high-school/pew-pew-penguino" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star henley-high-school/pew-pew-penguino on GitHub">Star</a>
 
 <a href="https://penguinogame.me/aboutus">
   <button class="cayman-button">About Us</button>
