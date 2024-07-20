@@ -66,7 +66,7 @@ Thanks for visiting our website! Do you mind filling in a quick survey?
 
 <style>
   .cayman-button {
-    background-color: #c41c02; /* Red background */
+    background-color: #0366d6; /* Red background */
     color: #fff; /* White text */
     border: none;
     padding: 10px 20px;
@@ -78,12 +78,12 @@ Thanks for visiting our website! Do you mind filling in a quick survey?
   }
   
   .cayman-button:hover {
-    background-color: #a31702; /* Darker red on hover */
+    background-color: #0056b3; /* Darker red on hover */
   }
   
   .cayman-button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(163, 23, 2, 0.5); /* Red outline on focus */
+    box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.5); /* Red outline on focus */
   }
 </style>
 
