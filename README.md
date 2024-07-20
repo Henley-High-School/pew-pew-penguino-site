@@ -6,9 +6,7 @@
   height="61" 
   frameBorder="0" 
   scrolling="no" 
-  style="border: none;"
->
-</iframe>
+  style="border: none;"></iframe>
 
 # Pew Pew Penguino Offical Home
 
