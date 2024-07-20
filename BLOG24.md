@@ -3,6 +3,9 @@ layout: default
 title: "Pew Pew Penguino Blog"
 permalink: /blog-2024
 ---
+<script src="https://penguino.instatus.com/en/25e02ceb/widget/script.js">
+</script>
+
 # Blogs for 2024 are stored on this page.
 You can find a blog post by looking for the blog post name via the buttons.
 Enjoy!

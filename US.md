@@ -3,6 +3,9 @@ layout: default
 title: "Who are we?"
 permalink: /aboutus
 ---
+<script src="https://penguino.instatus.com/en/25e02ceb/widget/script.js">
+</script>
+
 <a href="https://penguinogame.me">
   <button class="cayman-button">Back Home!</button>
 </a>

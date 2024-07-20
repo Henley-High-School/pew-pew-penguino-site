@@ -1,3 +1,6 @@
+<script src="https://penguino.instatus.com/en/25e02ceb/widget/script.js">
+</script>
+
 # 16/07/2024 
 # Welcome to the Blog!!!
 

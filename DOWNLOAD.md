@@ -3,6 +3,8 @@ layout: default
 title: "Download"
 permalink: /download
 ---
+<script src="https://penguino.instatus.com/en/25e02ceb/widget/script.js">
+</script>
 
 <head>
     <meta charset="UTF-8">
