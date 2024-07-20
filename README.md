@@ -4,32 +4,8 @@
 
 ## Have a look to see what we've done via our blogs or browse around the place!
 
-<a href="https://penguinogame.me/download">
-  <button class="cayman-button">Download Pew Pew Penguino</button>
-</a>
-
-<style>
-  .cayman-button {
-    background-color: #0366d6; /* Blue background */
-    color: #fff; /* White text */
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .cayman-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
-  
-  .cayman-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.5); /* Blue outline on focus */
-  }
-</style>
+<!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/henley-high-school/pew-pew-penguino" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star henley-high-school/pew-pew-penguino on GitHub">Star</a>
 
 <a href="https://penguinogame.me/aboutus">
   <button class="cayman-button">About Us</button>
