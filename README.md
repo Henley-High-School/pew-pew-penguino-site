@@ -58,13 +58,15 @@
   }
 </style>
 
-<a href="https://penguinologs.beehiiv.com/subscribe">
-  <button class="cayman-button">Penguino Logs Newsletter!</button>
+Thanks for visiting our website! Do you mind filling in a quick survey?
+
+<a href="https://tally.so/r/3E0YqB">
+  <button class="cayman-button">Sure! Why not?</button>
 </a>
 
 <style>
   .cayman-button {
-    background-color: #0366d6; /* Blue background */
+    background-color: #c41c02; /* Red background */
     color: #fff; /* White text */
     border: none;
     padding: 10px 20px;
@@ -76,16 +78,18 @@
   }
   
   .cayman-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #a31702; /* Darker red on hover */
   }
   
   .cayman-button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.5); /* Blue outline on focus */
+    box-shadow: 0 0 0 3px rgba(163, 23, 2, 0.5); /* Red outline on focus */
   }
 </style>
-P.S The newsletter comes out bi-weekly (Every 2 weeks).
+
 <iframe src="https://embeds.beehiiv.com/54543288-6f1a-431e-ada3-93dba7f3c8bc" data-test-id="beehiiv-embed" width="480" height="320" frameborder="0" scrolling="no" style="border-radius: 4px; border: 2px solid #e5e7eb; margin: 0; background-color: transparent;"></iframe>
+
+P.S The newsletter comes out bi-weekly (Every 2 weeks).
 
 ## Here's some pictures of whats been made so far!
 <body>
