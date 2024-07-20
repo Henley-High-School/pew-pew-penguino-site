@@ -1,12 +1,6 @@
 <!-- Place this tag where you want the button to render. -->
 <a class="github-button" href="https://github.com/henley-high-school/pew-pew-penguino" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star henley-high-school/pew-pew-penguino on GitHub">Star</a> <!-- Place this tag where you want the button to render. -->
-<a class="github-button" href="https://github.com/henley-high-school" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @henley-high-school on GitHub">Follow @henley-high-school</a> <iframe 
-  src="https://penguino.instatus.com/embed-status/25e02ceb/dark-md" 
-  width="230" 
-  height="61" 
-  frameBorder="0" 
-  scrolling="no" 
-  style="border: none;"></iframe>
+<a class="github-button" href="https://github.com/henley-high-school" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @henley-high-school on GitHub">Follow @henley-high-school</a>
 
 # Pew Pew Penguino Offical Home
 
