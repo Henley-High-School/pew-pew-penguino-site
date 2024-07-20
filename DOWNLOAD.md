@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Download"
+permalink: /download
+---
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,9 +66,7 @@
         <div class="content">
             <p>Welcome to the official download page for Pew Pew Penguino! Click the buttons below to download the game for your preferred platform.</p>
             <div class="download-buttons">
-                <a href="path/to/windows-version" download>Pew Pew Penguino for Windows</a>
-                <a href="path/to/mac-version" download>Pew Pew Penguino for Mac</a>
-                <a href="path/to/linux-version" download>Pew Pew Penguino for Linux</a>
+                <a href="https://github.com/Henley-High-School/pew-pew-penguino" download>Pew Pew Penguino for Windows</a>
             </div>
             <p>Make sure to check the system requirements before downloading. Happy gaming!</p>
         </div>
