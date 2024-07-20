@@ -85,7 +85,7 @@
   }
 </style>
 P.S The newsletter comes out bi-weekly (Every 2 weeks).
-
+<iframe src="https://embeds.beehiiv.com/54543288-6f1a-431e-ada3-93dba7f3c8bc" data-test-id="beehiiv-embed" width="480" height="320" frameborder="0" scrolling="no" style="border-radius: 4px; border: 2px solid #e5e7eb; margin: 0; background-color: transparent;"></iframe>
 
 ## Here's some pictures of whats been made so far!
 <body>
