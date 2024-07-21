@@ -6,7 +6,7 @@
 
 # You found the offical website for Pew Pew Penguino!
 
-## Have a look to see what we've done via our blogs or browse around the place!
+## Have a look to see what we've done via our blogs or browse around the place and visit things like our newsltter or the repository.
 
 <a href="https://penguinogame.me/aboutus">
   <button class="cayman-button">About Us</button>
