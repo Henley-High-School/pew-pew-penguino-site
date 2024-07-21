@@ -38,6 +38,10 @@ const levels = [
     // Add more levels as needed
 ];
 
+let isJumping = false;
+let jumpSpeed = 0;
+const gravity = 1;
+
 function loadLevel(levelIndex) {
     const level = levels[levelIndex];
     container.style.backgroundImage = `url(${level.backgroundImage})`;
@@ -74,6 +78,8 @@ function loadLevel(levelIndex) {
 }
 
 document.addEventListener('keydown', function(event) {
+    event.preventDefault(); // Prevent page from scrolling
+
     let rect = penguin.getBoundingClientRect();
     let containerRect = container.getBoundingClientRect();
     let moveAmount = 10;
@@ -81,11 +87,14 @@ document.addEventListener('keydown', function(event) {
     switch(event.key) {
         case 'ArrowUp':
         case 'w':
-            if (rect.top > containerRect.top) penguin.style.top = (rect.top - moveAmount - containerRect.top) + 'px';
+            if (!isJumping) {
+                isJumping = true;
+                jumpSpeed = -15;
+            }
             break;
         case 'ArrowDown':
         case 's':
-            if (rect.bottom < containerRect.bottom) penguin.style.top = (rect.top + moveAmount - containerRect.top) + 'px';
+            // No downward movement; can add crouch functionality here if desired
             break;
         case 'ArrowLeft':
         case 'a':
@@ -96,8 +105,44 @@ document.addEventListener('keydown', function(event) {
             if (rect.right < containerRect.right) penguin.style.left = (rect.left + moveAmount - containerRect.left) + 'px';
             break;
     }
-    checkCollision();
 });
+
+function applyGravity() {
+    let penguinRect = penguin.getBoundingClientRect();
+    let containerRect = container.getBoundingClientRect();
+
+    if (isJumping) {
+        jumpSpeed += gravity;
+        penguin.style.top = (penguinRect.top + jumpSpeed - containerRect.top) + 'px';
+        
+        if (penguinRect.bottom + jumpSpeed >= containerRect.bottom) {
+            penguin.style.top = (containerRect.bottom - penguinRect.height - containerRect.top) + 'px';
+            isJumping = false;
+            jumpSpeed = 0;
+        }
+
+        // Check collision with platforms to stop falling
+        let platforms = document.getElementsByClassName('platform');
+        for (let i = 0; i < platforms.length; i++) {
+            let platformRect = platforms[i].getBoundingClientRect();
+            if (penguinRect.left < platformRect.left + platformRect.width &&
+                penguinRect.left + penguinRect.width > platformRect.left &&
+                penguinRect.top + penguinRect.height <= platformRect.top + platformRect.height &&
+                penguinRect.top + penguinRect.height + jumpSpeed >= platformRect.top) {
+                penguin.style.top = (platformRect.top - penguinRect.height - containerRect.top) + 'px';
+                isJumping = false;
+                jumpSpeed = 0;
+            }
+        }
+    } else {
+        // Check if penguin is on the ground or platform
+        if (penguinRect.bottom < containerRect.bottom) {
+            isJumping = true;
+            jumpSpeed = 1; // Start falling if not already jumping
+        }
+    }
+    checkCollision();
+}
 
 function checkCollision() {
     let penguinRect = penguin.getBoundingClientRect();
@@ -115,26 +160,6 @@ function checkCollision() {
             resetGame();
             return;
         }
-    }
-
-    // Check collision with platforms
-    let onPlatform = false;
-    for (let i = 0; i < platforms.length; i++) {
-        let platformRect = platforms[i].getBoundingClientRect();
-        if (penguinRect.left < platformRect.left + platformRect.width &&
-            penguinRect.left + penguinRect.width > platformRect.left &&
-            penguinRect.top + penguinRect.height > platformRect.top &&
-            penguinRect.top + penguinRect.height < platformRect.top + platformRect.height) {
-            onPlatform = true;
-            break;
-        }
-    }
-
-    // If not on any platform and falling, respawn at start
-    if (!onPlatform && penguinRect.top + penguinRect.height < containerRect.bottom) {
-        alert('You fell off the platform!');
-        resetGame();
-        return;
     }
 
     // Check collision with finish
@@ -157,8 +182,11 @@ function checkCollision() {
 
 function resetGame() {
     penguin.style.left = '20px';
-    penguin.style.top = '250px';
+    penguin.style.top = '550px'; // Start on the ground
 }
+
+// Apply gravity continuously
+setInterval(applyGravity, 20);
 
 // Load the first level initially
 loadLevel(currentLevel);
