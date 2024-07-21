@@ -12,6 +12,11 @@ const levels = [
             { top: 300, left: 400 },
             { top: 400, left: 500 }
         ],
+        platforms: [
+            { top: 200, left: 150 },
+            { top: 350, left: 350 },
+            { top: 450, left: 600 }
+        ],
         finish: { top: 500, left: 700 },
         message: 'Level 1: Australia'
     },
@@ -22,49 +27,15 @@ const levels = [
             { top: 250, left: 400 },
             { top: 350, left: 600 }
         ],
+        platforms: [
+            { top: 100, left: 200 },
+            { top: 300, left: 400 },
+            { top: 400, left: 600 }
+        ],
         finish: { top: 500, left: 700 },
         message: 'Level 2: Japan'
     },
-    {
-        backgroundImage: '/images/place3.png',
-        obstacles: [
-            { top: 100, left: 100 },
-            { top: 200, left: 300 },
-            { top: 300, left: 500 }
-        ],
-        finish: { top: 500, left: 700 },
-        message: 'Level 3: UK'
-    },
-    {
-        backgroundImage: '/images/place4.png',
-        obstacles: [
-            { top: 150, left: 250 },
-            { top: 250, left: 450 },
-            { top: 350, left: 650 }
-        ],
-        finish: { top: 500, left: 700 },
-        message: 'Level 4: USA'
-    },
-    {
-        backgroundImage: '/images/place5.png',
-        obstacles: [
-            { top: 100, left: 200 },
-            { top: 200, left: 400 },
-            { top: 300, left: 600 }
-        ],
-        finish: { top: 500, left: 700 },
-        message: 'Level 5: Dubai'
-    },
-    {
-        backgroundImage: '/images/place6.png',
-        obstacles: [
-            { top: 150, left: 150 },
-            { top: 250, left: 350 },
-            { top: 350, left: 550 }
-        ],
-        finish: { top: 500, left: 700 },
-        message: 'Level 6: Antarctica'
-    }
+    // Add more levels as needed
 ];
 
 function loadLevel(levelIndex) {
@@ -72,11 +43,29 @@ function loadLevel(levelIndex) {
     container.style.backgroundImage = `url(${level.backgroundImage})`;
     message.innerText = level.message;
 
-    // Position obstacles
-    const obstacles = document.querySelectorAll('.obstacle');
-    obstacles.forEach((obstacle, index) => {
-        obstacle.style.top = level.obstacles[index].top + 'px';
-        obstacle.style.left = level.obstacles[index].left + 'px';
+    // Remove previous obstacles and platforms
+    const existingObstacles = document.querySelectorAll('.obstacle');
+    existingObstacles.forEach(obstacle => obstacle.remove());
+
+    const existingPlatforms = document.querySelectorAll('.platform');
+    existingPlatforms.forEach(platform => platform.remove());
+
+    // Add new obstacles
+    level.obstacles.forEach(pos => {
+        let obstacle = document.createElement('div');
+        obstacle.classList.add('obstacle');
+        obstacle.style.top = pos.top + 'px';
+        obstacle.style.left = pos.left + 'px';
+        container.appendChild(obstacle);
+    });
+
+    // Add new platforms
+    level.platforms.forEach(pos => {
+        let platform = document.createElement('div');
+        platform.classList.add('platform');
+        platform.style.top = pos.top + 'px';
+        platform.style.left = pos.left + 'px';
+        container.appendChild(platform);
     });
 
     // Position finish line
@@ -87,18 +76,24 @@ function loadLevel(levelIndex) {
 document.addEventListener('keydown', function(event) {
     let rect = penguin.getBoundingClientRect();
     let containerRect = container.getBoundingClientRect();
+    let moveAmount = 10;
+
     switch(event.key) {
         case 'ArrowUp':
-            if (rect.top > containerRect.top) penguin.style.top = rect.top - 10 + 'px';
+        case 'w':
+            if (rect.top > containerRect.top) penguin.style.top = (rect.top - moveAmount - containerRect.top) + 'px';
             break;
         case 'ArrowDown':
-            if (rect.bottom < containerRect.bottom) penguin.style.top = rect.top + 10 + 'px';
+        case 's':
+            if (rect.bottom < containerRect.bottom) penguin.style.top = (rect.top + moveAmount - containerRect.top) + 'px';
             break;
         case 'ArrowLeft':
-            if (rect.left > containerRect.left) penguin.style.left = rect.left - 10 + 'px';
+        case 'a':
+            if (rect.left > containerRect.left) penguin.style.left = (rect.left - moveAmount - containerRect.left) + 'px';
             break;
         case 'ArrowRight':
-            if (rect.right < containerRect.right) penguin.style.left = rect.left + 10 + 'px';
+        case 'd':
+            if (rect.right < containerRect.right) penguin.style.left = (rect.left + moveAmount - containerRect.left) + 'px';
             break;
     }
     checkCollision();
@@ -107,7 +102,9 @@ document.addEventListener('keydown', function(event) {
 function checkCollision() {
     let penguinRect = penguin.getBoundingClientRect();
     let obstacles = document.getElementsByClassName('obstacle');
+    let platforms = document.getElementsByClassName('platform');
 
+    // Check collision with obstacles
     for (let i = 0; i < obstacles.length; i++) {
         let obstacleRect = obstacles[i].getBoundingClientRect();
         if (penguinRect.left < obstacleRect.left + obstacleRect.width &&
@@ -120,6 +117,27 @@ function checkCollision() {
         }
     }
 
+    // Check collision with platforms
+    let onPlatform = false;
+    for (let i = 0; i < platforms.length; i++) {
+        let platformRect = platforms[i].getBoundingClientRect();
+        if (penguinRect.left < platformRect.left + platformRect.width &&
+            penguinRect.left + penguinRect.width > platformRect.left &&
+            penguinRect.top + penguinRect.height > platformRect.top &&
+            penguinRect.top + penguinRect.height < platformRect.top + platformRect.height) {
+            onPlatform = true;
+            break;
+        }
+    }
+
+    // If not on any platform and falling, respawn at start
+    if (!onPlatform && penguinRect.top + penguinRect.height < containerRect.bottom) {
+        alert('You fell off the platform!');
+        resetGame();
+        return;
+    }
+
+    // Check collision with finish
     let finishRect = finish.getBoundingClientRect();
     if (penguinRect.left < finishRect.left + finishRect.width &&
         penguinRect.left + penguinRect.width > finishRect.left &&

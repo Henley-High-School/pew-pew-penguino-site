@@ -24,7 +24,7 @@ body {
     position: absolute;
     width: 50px;
     height: 50px;
-    background-image: url('/images/penguin.png'); /* Add your penguin image here */
+    background-image: url('/images/penguin.png');
     background-size: cover;
     left: 20px;
     top: 250px;
@@ -37,19 +37,11 @@ body {
     background-color: red;
 }
 
-#obstacle1 {
-    top: 100px;
-    left: 300px;
-}
-
-#obstacle2 {
-    top: 300px;
-    left: 400px;
-}
-
-#obstacle3 {
-    top: 400px;
-    left: 500px;
+.platform {
+    position: absolute;
+    width: 100px;
+    height: 20px;
+    background-color: #888; /* Gray color for platforms */
 }
 
 #finish {
