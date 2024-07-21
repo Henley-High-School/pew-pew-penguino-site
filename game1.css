@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#game-container {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    background-size: cover;
+    border: 2px solid #000;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+#penguin {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url('/images/penguin.png'); /* Add your penguin image here */
+    background-size: cover;
+    left: 20px;
+    top: 250px;
+}
+
+.obstacle {
+    position: absolute;
+    width: 100px;
+    height: 20px;
+    background-color: red;
+}
+
+#obstacle1 {
+    top: 100px;
+    left: 300px;
+}
+
+#obstacle2 {
+    top: 300px;
+    left: 400px;
+}
+
+#obstacle3 {
+    top: 400px;
+    left: 500px;
+}
+
+#finish {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: green;
+    bottom: 20px;
+    right: 20px;
+}
+
+#message {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+}
