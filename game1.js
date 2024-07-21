@@ -3,6 +3,9 @@ let container = document.getElementById('game-container');
 let finish = document.getElementById('finish');
 let message = document.getElementById('message');
 let currentLevel = 0;
+let randomMode = false;
+let timer = null;
+let startTime = null;
 
 const levels = [
     {
@@ -41,18 +44,44 @@ const levels = [
 let isJumping = false;
 let jumpSpeed = 0;
 const gravity = 1;
+let moveSpeed = 5;
+
+function generateRandomLevel(numObstacles, numPlatforms, finishPosition) {
+    let obstacles = Array.from({ length: numObstacles }, () => ({ top: random(50, 550), left: random(50, 750) }));
+    let platforms = Array.from({ length: numPlatforms }, () => ({ top: random(50, 550), left: random(50, 750) }));
+    return {
+        backgroundImage: '/images/random_place.png',
+        obstacles: obstacles,
+        platforms: platforms,
+        finish: { top: finishPosition[0], left: finishPosition[1] },
+        message: 'Random Level'
+    };
+}
+
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function startGame() {
+    document.getElementById('menu').style.display = 'none';
+    container.style.display = 'block';
+    loadLevel(currentLevel);
+}
+
+function startRandomMode() {
+    randomMode = true;
+    startGame();
+    startTime = new Date();
+}
 
 function loadLevel(levelIndex) {
-    const level = levels[levelIndex];
+    const level = randomMode ? generateRandomLevel(5 + levelIndex, 3 + levelIndex, [500, 700]) : levels[levelIndex];
     container.style.backgroundImage = `url(${level.backgroundImage})`;
     message.innerText = level.message;
 
     // Remove previous obstacles and platforms
-    const existingObstacles = document.querySelectorAll('.obstacle');
-    existingObstacles.forEach(obstacle => obstacle.remove());
-
-    const existingPlatforms = document.querySelectorAll('.platform');
-    existingPlatforms.forEach(platform => platform.remove());
+    document.querySelectorAll('.obstacle').forEach(obstacle => obstacle.remove());
+    document.querySelectorAll('.platform').forEach(platform => platform.remove());
 
     // Add new obstacles
     level.obstacles.forEach(pos => {
@@ -82,30 +111,34 @@ document.addEventListener('keydown', function(event) {
 
     let rect = penguin.getBoundingClientRect();
     let containerRect = container.getBoundingClientRect();
-    let moveAmount = 10;
+    let key = event.key;
 
-    switch(event.key) {
-        case 'ArrowUp':
-        case 'w':
-            if (!isJumping) {
-                isJumping = true;
-                jumpSpeed = -15;
-            }
-            break;
-        case 'ArrowDown':
-        case 's':
-            // No downward movement; can add crouch functionality here if desired
-            break;
-        case 'ArrowLeft':
-        case 'a':
-            if (rect.left > containerRect.left) penguin.style.left = (rect.left - moveAmount - containerRect.left) + 'px';
-            break;
-        case 'ArrowRight':
-        case 'd':
-            if (rect.right < containerRect.right) penguin.style.left = (rect.left + moveAmount - containerRect.left) + 'px';
-            break;
+    if (key === 'ArrowUp' || key === 'w') {
+        if (!isJumping) {
+            isJumping = true;
+            jumpSpeed = -15;
+        }
+    } else if (key === 'ArrowLeft' || key === 'a') {
+        movePenguin(-moveSpeed, 0);
+    } else if (key === 'ArrowRight' || key === 'd') {
+        movePenguin(moveSpeed, 0);
     }
 });
+
+function movePenguin(dx, dy) {
+    let rect = penguin.getBoundingClientRect();
+    let containerRect = container.getBoundingClientRect();
+    let newX = rect.left - containerRect.left + dx;
+    let newY = rect.top - containerRect.top + dy;
+
+    if (newX >= 0 && newX + rect.width <= containerRect.width) {
+        penguin.style.left = newX + 'px';
+    }
+
+    if (newY >= 0 && newY + rect.height <= containerRect.height) {
+        penguin.style.top = newY + 'px';
+    }
+}
 
 function applyGravity() {
     let penguinRect = penguin.getBoundingClientRect();
@@ -113,8 +146,9 @@ function applyGravity() {
 
     if (isJumping) {
         jumpSpeed += gravity;
-        penguin.style.top = (penguinRect.top + jumpSpeed - containerRect.top) + 'px';
-        
+        let newY = penguinRect.top + jumpSpeed - containerRect.top;
+        penguin.style.top = newY + 'px';
+
         if (penguinRect.bottom + jumpSpeed >= containerRect.bottom) {
             penguin.style.top = (containerRect.bottom - penguinRect.height - containerRect.top) + 'px';
             isJumping = false;
@@ -123,8 +157,8 @@ function applyGravity() {
 
         // Check collision with platforms to stop falling
         let platforms = document.getElementsByClassName('platform');
-        for (let i = 0; i < platforms.length; i++) {
-            let platformRect = platforms[i].getBoundingClientRect();
+        for (let platform of platforms) {
+            let platformRect = platform.getBoundingClientRect();
             if (penguinRect.left < platformRect.left + platformRect.width &&
                 penguinRect.left + penguinRect.width > platformRect.left &&
                 penguinRect.top + penguinRect.height <= platformRect.top + platformRect.height &&
@@ -136,57 +170,4 @@ function applyGravity() {
         }
     } else {
         // Check if penguin is on the ground or platform
-        if (penguinRect.bottom < containerRect.bottom) {
-            isJumping = true;
-            jumpSpeed = 1; // Start falling if not already jumping
-        }
-    }
-    checkCollision();
-}
-
-function checkCollision() {
-    let penguinRect = penguin.getBoundingClientRect();
-    let obstacles = document.getElementsByClassName('obstacle');
-    let platforms = document.getElementsByClassName('platform');
-
-    // Check collision with obstacles
-    for (let i = 0; i < obstacles.length; i++) {
-        let obstacleRect = obstacles[i].getBoundingClientRect();
-        if (penguinRect.left < obstacleRect.left + obstacleRect.width &&
-            penguinRect.left + penguinRect.width > obstacleRect.left &&
-            penguinRect.top < obstacleRect.top + obstacleRect.height &&
-            penguinRect.top + penguinRect.height > obstacleRect.top) {
-            alert('Game Over! You hit an obstacle.');
-            resetGame();
-            return;
-        }
-    }
-
-    // Check collision with finish
-    let finishRect = finish.getBoundingClientRect();
-    if (penguinRect.left < finishRect.left + finishRect.width &&
-        penguinRect.left + penguinRect.width > finishRect.left &&
-        penguinRect.top < finishRect.top + finishRect.height &&
-        penguinRect.top + penguinRect.height > finishRect.top) {
-        currentLevel++;
-        if (currentLevel < levels.length) {
-            alert('Congratulations! Proceed to the next level.');
-            resetGame();
-            loadLevel(currentLevel);
-        } else {
-            alert('Congratulations! You have completed all levels.');
-            resetGame();
-        }
-    }
-}
-
-function resetGame() {
-    penguin.style.left = '20px';
-    penguin.style.top = '550px'; // Start on the ground
-}
-
-// Apply gravity continuously
-setInterval(applyGravity, 20);
-
-// Load the first level initially
-loadLevel(currentLevel);
+        if (peng &#8203;:citation[oaicite:0]{index=0}&#8203;

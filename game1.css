@@ -7,6 +7,11 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+    overflow: hidden; /* Prevent scrolling */
+}
+
+#menu {
+    text-align: center;
 }
 
 #game-container {
@@ -17,7 +22,7 @@ body {
     border: 2px solid #000;
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 20px;
+    display: none;
 }
 
 #penguin {
@@ -27,7 +32,7 @@ body {
     background-image: url('/images/penguin.png');
     background-size: cover;
     left: 20px;
-    top: 250px;
+    bottom: 0; /* Start on the ground */
 }
 
 .obstacle {
