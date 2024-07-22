@@ -62,6 +62,9 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+document.getElementById('start-game-button').addEventListener('click', startGame);
+document.getElementById('random-mode-button').addEventListener('click', startRandomMode);
+
 function startGame() {
     document.getElementById('menu').style.display = 'none';
     container.style.display = 'block';
@@ -109,8 +112,6 @@ function loadLevel(levelIndex) {
 document.addEventListener('keydown', function(event) {
     event.preventDefault(); // Prevent page from scrolling
 
-    let rect = penguin.getBoundingClientRect();
-    let containerRect = container.getBoundingClientRect();
     let key = event.key;
 
     if (key === 'ArrowUp' || key === 'w') {
@@ -170,4 +171,41 @@ function applyGravity() {
         }
     } else {
         // Check if penguin is on the ground or platform
-        if (peng &#8203;:citation[oaicite:0]{index=0}&#8203;
+        if (penguinRect.bottom < containerRect.bottom) {
+            penguin.style.top = (penguinRect.top + gravity - containerRect.top) + 'px';
+        }
+    }
+}
+
+function checkFinish() {
+    let penguinRect = penguin.getBoundingClientRect();
+    let finishRect = finish.getBoundingClientRect();
+    let containerRect = container.getBoundingClientRect();
+
+    if (penguinRect.left < finishRect.left + finishRect.width &&
+        penguinRect.left + penguinRect.width > finishRect.left &&
+        penguinRect.top < finishRect.top + finishRect.height &&
+        penguinRect.top + penguinRect.height > finishRect.top) {
+        if (randomMode) {
+            let timeTaken = (new Date() - startTime) / 1000;
+            message.innerText = `Congratulations! You completed the random level in ${timeTaken.toFixed(2)} seconds!`;
+            randomMode = false;
+        } else {
+            message.innerText = 'Congratulations! You finished the level!';
+            currentLevel++;
+            if (currentLevel < levels.length) {
+                loadLevel(currentLevel);
+            } else {
+                message.innerText = 'Congratulations! You finished all levels!';
+                clearInterval(timer);
+            }
+        }
+    }
+}
+
+function gameLoop() {
+    applyGravity();
+    checkFinish();
+}
+
+timer = setInterval(gameLoop, 20);
