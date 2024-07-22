@@ -38,13 +38,32 @@ const levels = [
         finish: { top: 500, left: 700 },
         message: 'Level 2: Japan'
     },
-    // Add more levels as needed
+    // Add more levels with increased difficulty
+    {
+        backgroundImage: '/images/place3.png',
+        obstacles: [
+            { top: 100, left: 150 },
+            { top: 200, left: 350 },
+            { top: 300, left: 500 },
+            { top: 400, left: 650 },
+            { top: 450, left: 100 }
+        ],
+        platforms: [
+            { top: 150, left: 200 },
+            { top: 250, left: 400 },
+            { top: 350, left: 600 },
+            { top: 450, left: 300 }
+        ],
+        finish: { top: 500, left: 700 },
+        message: 'Level 3: UK'
+    },
 ];
 
 let isJumping = false;
 let jumpSpeed = 0;
 const gravity = 1;
-let moveSpeed = 5;
+const moveSpeed = 5;
+let keys = {};
 
 function generateRandomLevel(numObstacles, numPlatforms, finishPosition) {
     let obstacles = Array.from({ length: numObstacles }, () => ({ top: random(50, 550), left: random(50, 750) }));
@@ -107,23 +126,19 @@ function loadLevel(levelIndex) {
     // Position finish line
     finish.style.top = level.finish.top + 'px';
     finish.style.left = level.finish.left + 'px';
+
+    // Reset penguin position
+    penguin.style.left = '20px';
+    penguin.style.top = '550px';
 }
 
 document.addEventListener('keydown', function(event) {
     event.preventDefault(); // Prevent page from scrolling
+    keys[event.key] = true;
+});
 
-    let key = event.key;
-
-    if (key === 'ArrowUp' || key === 'w') {
-        if (!isJumping) {
-            isJumping = true;
-            jumpSpeed = -15;
-        }
-    } else if (key === 'ArrowLeft' || key === 'a') {
-        movePenguin(-moveSpeed, 0);
-    } else if (key === 'ArrowRight' || key === 'd') {
-        movePenguin(moveSpeed, 0);
-    }
+document.addEventListener('keyup', function(event) {
+    keys[event.key] = false;
 });
 
 function movePenguin(dx, dy) {
@@ -162,26 +177,57 @@ function applyGravity() {
             let platformRect = platform.getBoundingClientRect();
             if (penguinRect.left < platformRect.left + platformRect.width &&
                 penguinRect.left + penguinRect.width > platformRect.left &&
-                penguinRect.top + penguinRect.height <= platformRect.top + platformRect.height &&
+                penguinRect.top + penguinRect.height <= platformRect.top + gravity &&
                 penguinRect.top + penguinRect.height + jumpSpeed >= platformRect.top) {
                 penguin.style.top = (platformRect.top - penguinRect.height - containerRect.top) + 'px';
                 isJumping = false;
                 jumpSpeed = 0;
+                break;
             }
         }
     } else {
-        // Check if penguin is on the ground or platform
-        if (penguinRect.bottom < containerRect.bottom) {
-            penguin.style.top = (penguinRect.top + gravity - containerRect.top) + 'px';
+        let newY = penguinRect.top + gravity - containerRect.top;
+        penguin.style.top = newY + 'px';
+
+        if (penguinRect.bottom + gravity >= containerRect.bottom) {
+            penguin.style.top = (containerRect.bottom - penguinRect.height - containerRect.top) + 'px';
+        }
+
+        // Check collision with platforms to stop falling
+        let platforms = document.getElementsByClassName('platform');
+        for (let platform of platforms) {
+            let platformRect = platform.getBoundingClientRect();
+            if (penguinRect.left < platformRect.left + platformRect.width &&
+                penguinRect.left + penguinRect.width > platformRect.left &&
+                penguinRect.bottom <= platformRect.top + gravity &&
+                penguinRect.bottom + gravity >= platformRect.top) {
+                penguin.style.top = (platformRect.top - penguinRect.height - containerRect.top) + 'px';
+                break;
+            }
         }
     }
 }
 
-function checkFinish() {
+function checkCollisions() {
     let penguinRect = penguin.getBoundingClientRect();
-    let finishRect = finish.getBoundingClientRect();
     let containerRect = container.getBoundingClientRect();
 
+    // Check collision with obstacles
+    let obstacles = document.getElementsByClassName('obstacle');
+    for (let obstacle of obstacles) {
+        let obstacleRect = obstacle.getBoundingClientRect();
+        if (penguinRect.left < obstacleRect.left + obstacleRect.width &&
+            penguinRect.left + penguinRect.width > obstacleRect.left &&
+            penguinRect.top < obstacleRect.top + obstacleRect.height &&
+            penguinRect.top + penguinRect.height > obstacleRect.top) {
+            penguin.style.left = '20px';
+            penguin.style.top = '550px';
+            break;
+        }
+    }
+
+    // Check collision with finish line
+    let finishRect = finish.getBoundingClientRect();
     if (penguinRect.left < finishRect.left + finishRect.width &&
         penguinRect.left + penguinRect.width > finishRect.left &&
         penguinRect.top < finishRect.top + finishRect.height &&
@@ -204,8 +250,18 @@ function checkFinish() {
 }
 
 function gameLoop() {
+    if (keys['ArrowLeft'] || keys['a']) {
+        movePenguin(-moveSpeed, 0);
+    }
+    if (keys['ArrowRight'] || keys['d']) {
+        movePenguin(moveSpeed, 0);
+    }
+    if ((keys['ArrowUp'] || keys['w']) && !isJumping) {
+        isJumping = true;
+        jumpSpeed = -15;
+    }
     applyGravity();
-    checkFinish();
+    checkCollisions();
 }
 
 timer = setInterval(gameLoop, 20);
