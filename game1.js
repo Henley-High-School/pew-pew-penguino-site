@@ -1,146 +1,18 @@
 let penguin = document.getElementById('penguin');
-let container = document.getElementById('game-container');
 let finish = document.getElementById('finish');
+let container = document.getElementById('game-container');
 let message = document.getElementById('message');
-let currentLevel = 0;
-let randomMode = false;
-let timer = null;
-let startTime = null;
-
-const levels = [
-    {
-        backgroundImage: '/images/place1.png',
-        obstacles: [
-            { top: 100, left: 300 },
-            { top: 300, left: 400 },
-            { top: 400, left: 500 }
-        ],
-        platforms: [
-            { top: 200, left: 150 },
-            { top: 350, left: 350 },
-            { top: 450, left: 600 }
-        ],
-        finish: { top: 500, left: 700 },
-        message: 'Level 1: Australia'
-    },
-    {
-        backgroundImage: '/images/place2.png',
-        obstacles: [
-            { top: 150, left: 200 },
-            { top: 250, left: 400 },
-            { top: 350, left: 600 }
-        ],
-        platforms: [
-            { top: 100, left: 200 },
-            { top: 300, left: 400 },
-            { top: 400, left: 600 }
-        ],
-        finish: { top: 500, left: 700 },
-        message: 'Level 2: Japan'
-    },
-    // Add more levels with increased difficulty
-    {
-        backgroundImage: '/images/place3.png',
-        obstacles: [
-            { top: 100, left: 150 },
-            { top: 200, left: 350 },
-            { top: 300, left: 500 },
-            { top: 400, left: 650 },
-            { top: 450, left: 100 }
-        ],
-        platforms: [
-            { top: 150, left: 200 },
-            { top: 250, left: 400 },
-            { top: 350, left: 600 },
-            { top: 450, left: 300 }
-        ],
-        finish: { top: 500, left: 700 },
-        message: 'Level 3: UK'
-    },
-];
-
 let isJumping = false;
+let canDoubleJump = true;
 let jumpSpeed = 0;
 const gravity = 1;
 const moveSpeed = 5;
 let keys = {};
+let randomMode = false;
+let currentLevel = 0;
+let timer;
 
-function generateRandomLevel(numObstacles, numPlatforms, finishPosition) {
-    let obstacles = Array.from({ length: numObstacles }, () => ({ top: random(50, 550), left: random(50, 750) }));
-    let platforms = Array.from({ length: numPlatforms }, () => ({ top: random(50, 550), left: random(50, 750) }));
-    return {
-        backgroundImage: '/images/random_place.png',
-        obstacles: obstacles,
-        platforms: platforms,
-        finish: { top: finishPosition[0], left: finishPosition[1] },
-        message: 'Random Level'
-    };
-}
-
-function random(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-document.getElementById('start-game-button').addEventListener('click', startGame);
-document.getElementById('random-mode-button').addEventListener('click', startRandomMode);
-
-function startGame() {
-    document.getElementById('menu').style.display = 'none';
-    container.style.display = 'block';
-    loadLevel(currentLevel);
-}
-
-function startRandomMode() {
-    randomMode = true;
-    startGame();
-    startTime = new Date();
-}
-
-function loadLevel(levelIndex) {
-    const level = randomMode ? generateRandomLevel(5 + levelIndex, 3 + levelIndex, [500, 700]) : levels[levelIndex];
-    container.style.backgroundImage = `url(${level.backgroundImage})`;
-    message.innerText = level.message;
-
-    // Remove previous obstacles and platforms
-    document.querySelectorAll('.obstacle').forEach(obstacle => obstacle.remove());
-    document.querySelectorAll('.platform').forEach(platform => platform.remove());
-
-    // Add new obstacles
-    level.obstacles.forEach(pos => {
-        let obstacle = document.createElement('div');
-        obstacle.classList.add('obstacle');
-        obstacle.style.top = pos.top + 'px';
-        obstacle.style.left = pos.left + 'px';
-        container.appendChild(obstacle);
-    });
-
-    // Add new platforms
-    level.platforms.forEach(pos => {
-        let platform = document.createElement('div');
-        platform.classList.add('platform');
-        platform.style.top = pos.top + 'px';
-        platform.style.left = pos.left + 'px';
-        container.appendChild(platform);
-    });
-
-    // Position finish line
-    finish.style.top = level.finish.top + 'px';
-    finish.style.left = level.finish.left + 'px';
-
-    // Reset penguin position
-    penguin.style.left = '20px';
-    penguin.style.top = '550px';
-}
-
-document.addEventListener('keydown', function(event) {
-    event.preventDefault(); // Prevent page from scrolling
-    keys[event.key] = true;
-});
-
-document.addEventListener('keyup', function(event) {
-    keys[event.key] = false;
-});
-
+// Movement function for the penguin
 function movePenguin(dx, dy) {
     let rect = penguin.getBoundingClientRect();
     let containerRect = container.getBoundingClientRect();
@@ -156,6 +28,7 @@ function movePenguin(dx, dy) {
     }
 }
 
+// Apply gravity to the penguin
 function applyGravity() {
     let penguinRect = penguin.getBoundingClientRect();
     let containerRect = container.getBoundingClientRect();
@@ -169,9 +42,9 @@ function applyGravity() {
             penguin.style.top = (containerRect.bottom - penguinRect.height - containerRect.top) + 'px';
             isJumping = false;
             jumpSpeed = 0;
+            canDoubleJump = true;
         }
 
-        // Check collision with platforms to stop falling
         let platforms = document.getElementsByClassName('platform');
         for (let platform of platforms) {
             let platformRect = platform.getBoundingClientRect();
@@ -182,6 +55,7 @@ function applyGravity() {
                 penguin.style.top = (platformRect.top - penguinRect.height - containerRect.top) + 'px';
                 isJumping = false;
                 jumpSpeed = 0;
+                canDoubleJump = true;
                 break;
             }
         }
@@ -193,7 +67,6 @@ function applyGravity() {
             penguin.style.top = (containerRect.bottom - penguinRect.height - containerRect.top) + 'px';
         }
 
-        // Check collision with platforms to stop falling
         let platforms = document.getElementsByClassName('platform');
         for (let platform of platforms) {
             let platformRect = platform.getBoundingClientRect();
@@ -208,11 +81,11 @@ function applyGravity() {
     }
 }
 
+// Check for collisions with obstacles, platforms, and the finish line
 function checkCollisions() {
     let penguinRect = penguin.getBoundingClientRect();
     let containerRect = container.getBoundingClientRect();
 
-    // Check collision with obstacles
     let obstacles = document.getElementsByClassName('obstacle');
     for (let obstacle of obstacles) {
         let obstacleRect = obstacle.getBoundingClientRect();
@@ -226,7 +99,19 @@ function checkCollisions() {
         }
     }
 
-    // Check collision with finish line
+    let barriers = document.getElementsByClassName('barrier');
+    for (let barrier of barriers) {
+        let barrierRect = barrier.getBoundingClientRect();
+        if (penguinRect.left < barrierRect.left + barrierRect.width &&
+            penguinRect.left + penguinRect.width > barrierRect.left &&
+            penguinRect.top < barrierRect.top + barrierRect.height &&
+            penguinRect.top + penguinRect.height > barrierRect.top) {
+            penguin.style.left = '20px';
+            penguin.style.top = '550px';
+            break;
+        }
+    }
+
     let finishRect = finish.getBoundingClientRect();
     if (penguinRect.left < finishRect.left + finishRect.width &&
         penguinRect.left + penguinRect.width > finishRect.left &&
@@ -249,6 +134,28 @@ function checkCollisions() {
     }
 }
 
+// Update positions of moving platforms
+function updateMovingPlatforms() {
+    platformsData.forEach(platformData => {
+        let rect = platformData.element.getBoundingClientRect();
+        let containerRect = container.getBoundingClientRect();
+
+        let newX = rect.left - containerRect.left + platformData.dx;
+        let newY = rect.top - containerRect.top + platformData.dy;
+
+        if (newX < 0 || newX + rect.width > containerRect.width) {
+            platformData.dx *= -1;
+        }
+        if (newY < 0 || newY + rect.height > containerRect.height) {
+            platformData.dy *= -1;
+        }
+
+        platformData.element.style.left = (newX + platformData.dx) + 'px';
+        platformData.element.style.top = (newY + platformData.dy) + 'px';
+    });
+}
+
+// Game loop function
 function gameLoop() {
     if (keys['ArrowLeft'] || keys['a']) {
         movePenguin(-moveSpeed, 0);
@@ -259,9 +166,138 @@ function gameLoop() {
     if ((keys['ArrowUp'] || keys['w']) && !isJumping) {
         isJumping = true;
         jumpSpeed = -15;
+    } else if ((keys['ArrowUp'] || keys['w']) && isJumping && canDoubleJump) {
+        jumpSpeed = -15;
+        canDoubleJump = false;
     }
     applyGravity();
     checkCollisions();
+    updateMovingPlatforms();
 }
 
-timer = setInterval(gameLoop, 20);
+// Start or restart game
+function startGame() {
+    document.getElementById('menu').style.display = 'none';
+    container.style.display = 'block';
+    loadLevel(currentLevel);
+    timer = setInterval(gameLoop, 20);
+}
+
+// Random mode for generating levels
+function startRandomMode() {
+    randomMode = true;
+    startGame();
+}
+
+// Event listeners for buttons
+document.getElementById('start-game-button').addEventListener('click', startGame);
+document.getElementById('random-mode-button').addEventListener('click', startRandomMode);
+
+// Handle key presses
+document.addEventListener('keydown', function(event) {
+    event.preventDefault();
+    keys[event.key] = true;
+});
+
+document.addEventListener('keyup', function(event) {
+    keys[event.key] = false;
+});
+
+// Load levels function
+function loadLevel(levelIndex) {
+    const level = randomMode ? generateRandomLevel(5 + levelIndex, 3 + levelIndex, [500, 700]) : levels[levelIndex];
+    container.style.backgroundImage = `url(${level.backgroundImage})`;
+    message.innerText = level.message;
+
+    // Remove previous obstacles, platforms, and barriers
+    document.querySelectorAll('.obstacle').forEach(obstacle => obstacle.remove());
+    document.querySelectorAll('.platform').forEach(platform => platform.remove());
+    document.querySelectorAll('.barrier').forEach(barrier => barrier.remove());
+
+    // Add new obstacles
+    level.obstacles.forEach(pos => {
+        let obstacle = document.createElement('div');
+        obstacle.classList.add('obstacle');
+        obstacle.style.top = pos.top + 'px';
+        obstacle.style.left = pos.left + 'px';
+        container.appendChild(obstacle);
+    });
+
+    // Add new platforms
+    level.platforms.forEach(pos => {
+        let platform = document.createElement('div');
+        platform.classList.add('platform');
+        platform.style.top = pos.top + 'px';
+        platform.style.left = pos.left + 'px';
+        container.appendChild(platform);
+        platformsData.push({ element: platform, dx: random(-1, 1), dy: random(-1, 1) });
+    });
+
+    // Add barriers
+    level.barriers.forEach(pos => {
+        let barrier = document.createElement('div');
+        barrier.classList.add('barrier');
+        barrier.style.top = pos.top + 'px';
+        barrier.style.left = pos.left + 'px';
+        container.appendChild(barrier);
+    });
+}
+
+// Generate random levels (for random mode)
+function generateRandomLevel(numObstacles, numPlatforms, sizeRange) {
+    let obstacles = [];
+    let platforms = [];
+    let barriers = [];
+    
+    for (let i = 0; i < numObstacles; i++) {
+        obstacles.push({
+            top: Math.random() * (container.clientHeight - 20),
+            left: Math.random() * (container.clientWidth - 100)
+        });
+    }
+    
+    for (let i = 0; i < numPlatforms; i++) {
+        platforms.push({
+            top: Math.random() * (container.clientHeight - 20),
+            left: Math.random() * (container.clientWidth - 100)
+        });
+    }
+    
+    for (let i = 0; i < numObstacles; i++) {
+        barriers.push({
+            top: Math.random() * (container.clientHeight - 100),
+            left: Math.random() * (container.clientWidth - 50)
+        });
+    }
+
+    return {
+        backgroundImage: '/images/background.jpg',
+        message: 'Random level generated!',
+        obstacles,
+        platforms,
+        barriers
+    };
+}
+
+// Example levels (for non-random mode)
+const levels = [
+    {
+        backgroundImage: '/images/background1.jpg',
+        message: 'Welcome to Level 1!',
+        obstacles: [{ top: 200, left: 300 }],
+        platforms: [{ top: 400, left: 150 }],
+        barriers: [{ top: 500, left: 500 }]
+    },
+    {
+        backgroundImage: '/images/background2.jpg',
+        message: 'Welcome to Level 2!',
+        obstacles: [{ top: 100, left: 200 }],
+        platforms: [{ top: 300, left: 100 }],
+        barriers: [{ top: 400, left: 400 }]
+    }
+];
+
+// Utility function to get random value
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
