@@ -38,7 +38,7 @@ permalink: /badge
 ***
 
 
-## These badges can be earnt by Coding Club members by doing certain tasks like making assets, music and more!
+## These badges can be earnt by Coding Club members by doing certain tasks like making assets, music and more! [Badge Portal](https://badgr.com/public/issuers/4irYyI2ATOqJGZzIuYixuQ/badges)
 
 ## P.S - Each training also grants you a special badge!
 
