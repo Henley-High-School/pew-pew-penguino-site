@@ -62,7 +62,7 @@
   }
 </style>
 
-<a href="penguinogame.me/badge">
+<a href="https://penguinogame.me/badge">
   <button class="cayman-button">Digital Badges</button>
 </a>
 
