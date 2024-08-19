@@ -70,7 +70,7 @@ permalink: /download
             <div class="download-buttons">
                 <a href="https://github.com/Henley-High-School/pew-pew-penguino" download>Pew Pew Penguino for Windows</a>
             </div>
-            <p>Make sure to check the system requirements before downloading. Happy gaming!</p>
+            <p>The game is currently not out.</p>
         </div>
     </div>
     <footer>
