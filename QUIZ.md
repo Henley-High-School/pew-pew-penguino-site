@@ -4,64 +4,84 @@ title: "Penguino Game Quiz"
 permalink: /quiz
 ---
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Penguin and Antarctica Quiz</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f8ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e0f7fa;
       text-align: center;
       margin: 0;
       padding: 0;
     }
     h1 {
-      color: #2a9d8f;
+      color: #00796b;
+      margin-top: 30px;
     }
     .quiz-container {
       margin: 20px auto;
-      padding: 20px;
+      padding: 30px;
       max-width: 600px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
     }
     .question {
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 10px;
+      color: #004d40;
     }
     .options label {
       display: block;
-      margin: 5px 0;
+      margin: 8px 0;
+      font-size: 18px;
     }
     .submit-btn, .reset-btn {
-      padding: 10px 20px;
-      margin: 15px 5px;
+      padding: 12px 25px;
+      margin: 20px 10px;
       border: none;
-      border-radius: 5px;
-      background-color: #2a9d8f;
+      border-radius: 10px;
+      background-color: #00796b;
       color: white;
+      font-size: 16px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
     .submit-btn:hover, .reset-btn:hover {
-      background-color: #21867a;
+      background-color: #004d40;
     }
     .result {
-      font-size: 18px;
-      margin-top: 20px;
-      color: #264653;
+      font-size: 20px;
+      margin-top: 25px;
+      color: #004d40;
     }
     .perfect-score {
-      margin-top: 20px;
+      margin-top: 25px;
       display: none;
+      font-size: 18px;
     }
     .perfect-score a {
-      color: #2a9d8f;
+      color: #00796b;
       font-weight: bold;
       text-decoration: none;
+    }
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #00796b;
+      animation: confetti-fall 3s infinite;
+    }
+    @keyframes confetti-fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(800px); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <h1>Penguin and Penguino Game Quiz 🐧</h1>
+  <h1>Penguin and Antarctica Quiz 🐧❄️</h1>
   <div class="quiz-container">
     <!-- Quiz Questions -->
     <div class="question">
@@ -106,12 +126,12 @@ permalink: /quiz
       <label><input type="radio" name="q5" value="c"> 10</label>
     </div>
     <div class="question">
-      6. What is the name of the final boss in Penguino Game?
+      6. What percentage of Antarctica is covered by ice?
     </div>
     <div class="options">
-      <label><input type="radio" name="q6" value="a"> Emperor Penguin</label>
-      <label><input type="radio" name="q6" value="b"> Snow King</label>
-      <label><input type="radio" name="q6" value="c"> Icy Dragon</label>
+      <label><input type="radio" name="q6" value="a"> 50%</label>
+      <label><input type="radio" name="q6" value="b"> 70%</label>
+      <label><input type="radio" name="q6" value="c"> 98%</label>
     </div>
     <div class="question">
       7. Penguins use their wings for what purpose?
@@ -130,12 +150,12 @@ permalink: /quiz
       <label><input type="radio" name="q8" value="c"> King Penguin</label>
     </div>
     <div class="question">
-      9. In Penguino Game, what can you buy with coins?
+      9. How cold can temperatures get in Antarctica during winter?
     </div>
     <div class="options">
-      <label><input type="radio" name="q9" value="a"> New Skills</label>
-      <label><input type="radio" name="q9" value="b"> Penguin Outfits</label>
-      <label><input type="radio" name="q9" value="c"> Extra Health</label>
+      <label><input type="radio" name="q9" value="a"> -20°C</label>
+      <label><input type="radio" name="q9" value="b"> -50°C</label>
+      <label><input type="radio" name="q9" value="c"> -80°C</label>
     </div>
     <div class="question">
       10. What is the smallest species of penguin?
@@ -154,12 +174,14 @@ permalink: /quiz
       <p>Fill out <a href="https://tally.so/r/nrVkbo" target="_blank">this form</a> to join the winners section!</p>
     </div>
   </div>
+
   <script>
     function submitQuiz() {
       const answers = {
-        q1: 'a', q2: 'b', q3: 'b', q4: 'a', q5: 'a', q6: 'b',
-        q7: 'b', q8: 'a', q9: 'b', q10: 'a'
+        q1: 'a', q2: 'b', q3: 'b', q4: 'a', q5: 'a', q6: 'c',
+        q7: 'b', q8: 'a', q9: 'c', q10: 'a'
       };
+
       let score = 0;
       for (let q in answers) {
         const selected = document.querySelector(`input[name="${q}"]:checked`);
@@ -167,19 +189,35 @@ permalink: /quiz
           score++;
         }
       }
+
       document.querySelector('.result').innerHTML = `You got ${score}/10 correct!`;
+      
       // Check if all answers are correct
       if (score === 10) {
         document.querySelector('.perfect-score').style.display = 'block';
+        launchConfetti();
       } else {
         document.querySelector('.perfect-score').style.display = 'none';
       }
     }
+
     function resetQuiz() {
       const inputs = document.querySelectorAll('input[type="radio"]');
       inputs.forEach(input => input.checked = false);
       document.querySelector('.result').innerHTML = '';
       document.querySelector('.perfect-score').style.display = 'none';
+    }
+
+    function launchConfetti() {
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.animationDelay = `${Math.random() * 2}s`;
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 3000);
+      }
     }
   </script>
 
