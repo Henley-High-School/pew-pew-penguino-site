@@ -184,4 +184,3 @@ permalink: /quiz
   </script>
 
 </body>
-</html>
