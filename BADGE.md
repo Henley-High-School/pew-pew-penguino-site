@@ -50,6 +50,7 @@ Every digital badge you earn from us requires that you have completed the requir
 ***
 
 ## Badges you can earn.
+
 | Badge | Description |
 |---|---|
 | GitHub Training Completed (Gold, Silver, Bronze & Normal) | This badge represents that the receiver has completed the HHS Coding Club GitHub Desktop Training program and is now trained to use GitHub Desktop. |
