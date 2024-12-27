@@ -3,7 +3,7 @@
 <a class="github-button" href="https://github.com/henley-high-school" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @henley-high-school on GitHub">Follow @henley-high-school</a>
 # Pew Pew Penguino Offical Home
 # You found the offical website for Pew Pew Penguino!
-## Have a look to see what we've done via our blogs or browse around the place and visit things like our newsltter or the repository.
+## Have a look to see what we've done via our blogs or browse around the place and visit things like our newsletter or the repository.
 <a href="https://penguinogame.me/aboutus">
   <button class="cayman-button">About Us</button>
 </a>
